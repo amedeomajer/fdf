@@ -6,7 +6,7 @@
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 17:24:24 by amajer            #+#    #+#             */
-/*   Updated: 2022/03/24 17:44:50 by amajer           ###   ########.fr       */
+/*   Updated: 2022/04/05 17:02:48 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 
 # define FD_MAX 10240
-# define BUFF_SIZE 50000
+# define BUFF_SIZE 8
 
 int     get_next_line(const int fd, char **line);
 void	*ft_memset(void *b, int c, size_t len);

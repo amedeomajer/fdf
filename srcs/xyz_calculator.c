@@ -6,11 +6,19 @@
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 19:54:47 by amajer            #+#    #+#             */
-/*   Updated: 2022/04/05 17:35:59 by amajer           ###   ########.fr       */
+/*   Updated: 2022/04/05 18:58:34 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
+
+static char	**ft_free(char **str, int a)
+{
+	while (a >= 0)
+		free(str[a--]);
+	free(str);
+	return (NULL);
+}
 
 void	create_matrix(t_data *d)
 {
@@ -53,13 +61,13 @@ void	count_lines(int fd, t_data *d)
 			error("file's lines are different sizes");
 		d->height++;
 		ft_strdel(&line);
+		ft_free(values_array, d->width);
+		values_array = NULL;
 		gnl_ret = get_next_line(fd, &line);
 	}
 	if (gnl_ret == -1)
 		error("read malfunction");
 	d->i = 0;
-	while (d->i < d->height)
-		ft_strdel(&values_array[d->i++]);
 	ft_strdel(&line);
 }
 
@@ -80,8 +88,8 @@ void	convert_map_to_int_array(int fd, t_data *d)
 		ft_strdel(&line);
 		d->j++;
 		d->i = 0;
-		while (d->i < d->height)
-			ft_strdel(&values_array[d->i++]);
+		ft_free(values_array, d->width);
+		values_array = NULL;
 		gnl_ret = get_next_line(fd, &line);
 	}
 	ft_strdel(&line);

@@ -6,7 +6,7 @@
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 16:18:09 by amajer            #+#    #+#             */
-/*   Updated: 2022/04/05 16:47:44 by amajer           ###   ########.fr       */
+/*   Updated: 2022/04/05 18:45:13 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,25 @@ void	initialize_struct(t_data *d)
 int	main(int argc, char **argv)
 {
 	int		fd;
-	t_data	*d;
+	t_data	d;
 
-	d = (t_data *)malloc(sizeof(t_data));
-	initialize_struct(d);
+	initialize_struct(&d);
 	if (argc != 2)
 		error("input ONE argument!");
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		error("open failed!");
-	count_lines(fd, d);
+	count_lines(fd, &d);
 	close(fd);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		error("open failed!");
-	create_matrix(d);
-	convert_map_to_int_array(fd, d);
-	draw_isometric(d);
-	mlx_put_image_to_window(d->mlx_ptr, d->mlx_window, d->img, 0, 0);
-	mlx_hook(d->mlx_window, ON_DESTROY, 0, esc, d);
-	mlx_hook(d->mlx_window, ON_KEYDOWN, (1L << 0), key_event, (void *)d);
-	mlx_loop(d->mlx_ptr);
+	create_matrix(&d);
+	convert_map_to_int_array(fd, &d);
+	draw_isometric(&d);
+	mlx_put_image_to_window(d.mlx_ptr, d.mlx_window, d.img, 0, 0);
+	mlx_hook(d.mlx_window, ON_DESTROY, 0, esc, &d);
+	mlx_hook(d.mlx_window, ON_KEYDOWN, (1L << 0), key_event, (void *)&d);
+	mlx_loop(d.mlx_ptr);
 	return (0);
 }

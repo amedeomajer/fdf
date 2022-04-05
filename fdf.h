@@ -6,13 +6,12 @@
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 18:42:03 by amajer            #+#    #+#             */
-/*   Updated: 2022/04/05 17:26:13 by amajer           ###   ########.fr       */
+/*   Updated: 2022/04/05 19:04:14 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-
 
 # include "libft/libft.h"
 
@@ -25,12 +24,6 @@
 # define WINDOW_WIDTH 2000
 # define WINDOW_HEIGHT 1500
 
-typedef	struct	s_xy
-{
-	float	x;
-	float	y;
-}				t_xy;
-
 enum {
 	ON_KEYDOWN = 2,
 	ON_KEYUP = 3,
@@ -41,7 +34,13 @@ enum {
 	ON_DESTROY = 17
 };
 
-typedef	struct	s_data
+typedef struct s_xy
+{
+	float	x;
+	float	y;
+}				t_xy;
+
+typedef struct s_data
 {
 	void	*img;
 	char	*addr;
@@ -77,15 +76,14 @@ void	dda(t_xy xy1, t_xy xy2, t_data *d);
 void	color_dda(t_xy xy1, t_xy xy2, t_data *d);
 t_xy	projection(float x, float y, float z, t_data *d);
 t_xy	*projection_call(t_data *d);
-
-int zoom_in(t_data *d);
-int zoom_out(t_data *d);
-int	esc(t_data *d);
-int	switch_to_parallel(t_data *d);
-int	key_event(int key, void *param);
-int move_left(t_data *d);
-int move_right(t_data *d);
-int move_up(t_data *d);
-int move_down(t_data *d);
+int		zoom_in(t_data *d);
+int		zoom_out(t_data *d);
+int		esc(t_data *d);
+int		switch_to_parallel(t_data *d);
+int		key_event(int key, void *param);
+int		move_left(t_data *d);
+int		move_right(t_data *d);
+int		move_up(t_data *d);
+int		move_down(t_data *d);
 
 #endif

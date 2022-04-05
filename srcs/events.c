@@ -6,7 +6,7 @@
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:35:14 by amajer            #+#    #+#             */
-/*   Updated: 2022/04/05 17:32:05 by amajer           ###   ########.fr       */
+/*   Updated: 2022/04/05 18:52:19 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 void	free_d(t_data *d)
 {
-	//ft_memdel(d->img);
-	//ft_strdel(&d->addr);
-	d->j = 0;
-	while (d->j < d->height)
+	int	j;
+
+	j = 0;
+	while (j < d->height)
 	{
-		free(d->depth[d->j]);
-		d->depth[d->j] = NULL;
-		d->j++;
+		free(d->depth[j]);
+		d->depth[j] = NULL;
+		j++;
 	}
+	free(d->depth);
 	d->depth = NULL;
 }
 

@@ -6,7 +6,7 @@
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:46:34 by amajer            #+#    #+#             */
-/*   Updated: 2022/04/07 16:07:00 by amajer           ###   ########.fr       */
+/*   Updated: 2022/04/07 17:35:04 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	esc(t_data *d)
 	mlx_destroy_image(d->mlx_ptr, d->img);
 	mlx_destroy_window(d->mlx_ptr, d->mlx_window);
 	free_d(d);
-	system("leaks fdf");
 	exit(0);
 	return (0);
 }

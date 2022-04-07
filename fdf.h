@@ -6,7 +6,7 @@
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 18:42:03 by amajer            #+#    #+#             */
-/*   Updated: 2022/04/07 16:25:42 by amajer           ###   ########.fr       */
+/*   Updated: 2022/04/07 16:53:53 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 
 # include <mlx.h>
 # include <fcntl.h>
-
-# include <stdio.h>
 # include <math.h>
 
 # define WINDOW_WIDTH 1500
@@ -27,10 +25,6 @@
 enum {
 	ON_KEYDOWN = 2,
 	ON_KEYUP = 3,
-	ON_MOUSEDOWN = 4,
-	ON_MOUSEUP = 5,
-	ON_MOUSEMOVE = 6,
-	ON_EXPOSE = 12,
 	ON_DESTROY = 17
 };
 

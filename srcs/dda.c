@@ -6,7 +6,7 @@
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:06:57 by amajer            #+#    #+#             */
-/*   Updated: 2022/04/05 16:08:11 by amajer           ###   ########.fr       */
+/*   Updated: 2022/04/05 22:36:38 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	dda(t_xy xy1, t_xy xy2, t_data *d)
 	x_increment = dx / steps;
 	y_increment = dy / steps;
 	dx = d->i;
-	d->i = 1;
+	d->i = 0;
 	while (d->i <= steps)
 	{
-		my_mlx_pixel_put(d, (int)xy1.x + 400, (int)xy1.y + 400, 0x08737f);
+		my_mlx_pixel_put(d, (int)xy1.x + 400, (int)xy1.y + 400, 0xffffff);
 		xy1.x = xy1.x + x_increment;
 		xy1.y = xy1.y + y_increment;
 		d->i++;
@@ -57,13 +57,15 @@ void	color_dda(t_xy xy1, t_xy xy2, t_data *d)
 	x_increment = dx / steps;
 	y_increment = dy / steps;
 	dx = d->i;
-	d->i = 1;
+	d->i = 0;
 	while (d->i <= steps)
 	{
-		my_mlx_pixel_put(d, (int)xy1.x + 400, (int)xy1.y + 400, 0xffffff);
+		my_mlx_pixel_put(d, (int)xy1.x + 400, (int)xy1.y + 400, 0xff00ff);
 		xy1.x = xy1.x + x_increment;
 		xy1.y = xy1.y + y_increment;
 		d->i++;
 	}
 	d->i = dx;
 }
+
+// 0x08737f

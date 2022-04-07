@@ -6,7 +6,7 @@
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 18:42:03 by amajer            #+#    #+#             */
-/*   Updated: 2022/04/05 19:04:14 by amajer           ###   ########.fr       */
+/*   Updated: 2022/04/07 14:07:48 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <stdio.h>
 # include <math.h>
 
-# define WINDOW_WIDTH 2000
-# define WINDOW_HEIGHT 1500
+# define WINDOW_WIDTH 700
+# define WINDOW_HEIGHT 700
 
 enum {
 	ON_KEYDOWN = 2,
@@ -63,6 +63,7 @@ typedef struct s_data
 	int		i;
 	int		j;
 	int		k;
+	int		z_scale;
 }				t_data;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
@@ -85,5 +86,8 @@ int		move_left(t_data *d);
 int		move_right(t_data *d);
 int		move_up(t_data *d);
 int		move_down(t_data *d);
+void	draw_iso_single_line(t_data *d);
+void	initialize_y_for_multiline(t_data *d);
+void	assign_values(t_xy *xy, t_data *d);
 
 #endif

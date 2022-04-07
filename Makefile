@@ -6,7 +6,7 @@
 #    By: amajer <amajer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/21 15:48:30 by amajer            #+#    #+#              #
-#    Updated: 2022/04/05 15:36:55 by amajer           ###   ########.fr        #
+#    Updated: 2022/04/06 22:18:22 by amajer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ SRC_DIR := ./srcs
 INC_DIR := ./includes
 LIBRARY := libft/libft.a
 # srcs and object files
-C_FILES := main.c my_mlx_pixel_put.c error.c xyz_calculator.c drawer.c dda.c projection.c zoom.c events.c move.c
-O_FILES := main.o my_mlx_pixel_put.o error.o xyz_calculator.o drawer.o dda.o projection.o zoom.o events.o move.o
+C_FILES := main.c my_mlx_pixel_put.c error.c xyz_calculator.c drawer.c dda.c projection.c zoom.c events.c move.c single_line_draw.c drawer2.c
+O_FILES := main.o my_mlx_pixel_put.o error.o xyz_calculator.o drawer.o dda.o projection.o zoom.o events.o move.o single_line_draw.o drawer2.o
 SRCS := $(addprefix $(SRC_DIR)/,$(C_FILES))
 
 # conpiler and flags

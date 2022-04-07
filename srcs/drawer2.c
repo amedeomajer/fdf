@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   drawer2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/24 18:44:03 by amajer            #+#    #+#             */
-/*   Updated: 2022/04/05 21:42:16 by amajer           ###   ########.fr       */
+/*   Created: 2022/04/06 22:15:50 by amajer            #+#    #+#             */
+/*   Updated: 2022/04/06 22:26:52 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-void	error(char *str)
+void	initialize_y_for_multiline(t_data *d)
 {
-	ft_putendl(str);
-	system("leaks fdf");
-	exit(1);
+	d->y1 = d->start_y;
+	d->y2 = d->start_y + d->zoom;
 }
+
+void	assign_values(t_xy *xy, t_data *d)
+{
+	xy[0].x = d->x1;
+	xy[0].y = d->y1;
+	xy[1].x = d->x2;
+	xy[1].y = d->y1;
+	xy[2].x = d->x1;
+	xy[2].y = d->y2;
+	xy[3].x = d->x2;
+	xy[3].y = d->y2;
+}
+

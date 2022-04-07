@@ -6,110 +6,75 @@
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:57:05 by amajer            #+#    #+#             */
-/*   Updated: 2022/03/24 16:25:13 by amajer           ###   ########.fr       */
+/*   Updated: 2022/04/07 16:39:36 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_isthere(char *str, char c)
+static void	join_and_free(char **s1, char *s2)
 {
-	int	i;
+	char	*temp;
 
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i] != '\0')
+	temp = ft_strjoin(*s1, s2);
+	free(*s1);
+	*s1 = temp;
+}
+
+static void	save_line(char **prev, char **line)
+{
+	char	*ptr_to_n;
+	char	*temp;
+
+	ptr_to_n = ft_strchr(*prev, '\n');
+	if (ptr_to_n)
 	{
-		if (str[i] == c)
-			return (1);
-		i++;
+		temp = ft_strdup(ptr_to_n + 1);
+		*ptr_to_n = '\0';
+		*line = ft_strdup(*prev);
+		free(*prev);
+		*prev = temp;
 	}
-	return (0);
-}
-
-static int	ft_str_movedel(char **src, char **dst)
-{
-	if (*src)
+	else
 	{
-		*dst = ft_strdup(*src);
-		if (*dst == NULL)
-			return (-1);
-		ft_strdel(&*src);
-		if (*dst)
-			return (1);
+		*line = *prev;
+		*prev = NULL;
 	}
-	return (-1);
 }
 
-static char	*ft_copy_to_line(char *str)
+static int	return_value(char **prev, ssize_t buf_len, char **line)
 {
-	int		i;
-	char	*str_to_new_line;
-
-	i = 0;
-	while (str[i] != '\n' && str[i] != 0)
-		i++;
-	str_to_new_line = ft_strnew(i + 1);
-	if (!str_to_new_line)
-		return (NULL);
-	ft_strncpy(str_to_new_line, str, i);
-	str_to_new_line[i] = '\0';
-	return (str_to_new_line);
-}
-
-static int	ft_read_function(char **prev, int fd, char **temp, int ret)
-{
-	char	*buff;
-
-	buff = (char *)malloc(sizeof(char) * BUFF_SIZE + 1);
-	if (!buff)
+	if (buf_len < 0)
+	{
+		ft_memdel((void **)prev);
 		return (-1);
-	while (ret > 0 && (ft_isthere(prev[fd], '\n') != 1))
-	{
-		ret = read(fd, buff, BUFF_SIZE);
-		if (ret < 0)
-			return (-1);
-		buff[ret] = 0;
-		if (!prev[fd])
-			prev[fd] = ft_strnew(ft_strlen(buff));
-		if (!prev[fd])
-			return (-1);
-		*temp = ft_strjoin(prev[fd], buff);
-		if (*temp == NULL)
-			return (-1);
-		ft_strdel(&prev[fd]);
-		if (ft_str_movedel(*&temp, &prev[fd]) == -1)
-			return (-1);
 	}
-	ft_strdel(&buff);
-	return (0);
+	if (buf_len == 0 && (*prev == NULL || !ft_strlen(*prev)))
+	{	
+		ft_memdel((void **)prev);
+		return (0);
+	}
+	save_line(prev, line);
+	return (1);
 }
 
 int	get_next_line(const int fd, char **line)
 {
-	static char		*previous[FD_MAX + 1];
-	char			*temp;
+	static char	*prev[FD_COUNT];
+	char		buff[BUFF_SIZE + 1];
+	ssize_t		buf_len;
 
-	if (fd < 0 || fd > FD_MAX || !line)
+	if (fd < 0 || line == NULL || fd >= FD_COUNT)
 		return (-1);
-	if (ft_isthere(previous[fd], '\n') == 0)
-		if (ft_read_function((char **)&previous, fd, &temp, 1) == -1)
-			return (-1);
-	if (previous[fd][0] != '\0')
+	buf_len = 1;
+	while (buf_len > 0 && (!prev[fd] || !ft_strchr(prev[fd], '\n')))
 	{
-		*line = ft_copy_to_line(previous[fd]);
-		if (*line == NULL || ft_str_movedel(&previous[fd], &temp) == -1)
-			return (-1);
-		if (ft_isthere(temp, '\n'))
-		{
-			previous[fd] = ft_strdup(ft_strchr(temp, '\n') + 1);
-			if (previous[fd] == NULL)
-				return (-1);
-		}
-		ft_strdel(&temp);
-		return (1);
+		buf_len = read(fd, buff, BUFF_SIZE);
+		buff[buf_len] = '\0';
+		if (!prev[fd])
+			prev[fd] = ft_strdup(buff);
+		else
+			join_and_free(&prev[fd], buff);
 	}
-	ft_strdel(&previous[fd]);
-	return (0);
+	return (return_value(&prev[fd], buf_len, line));
 }

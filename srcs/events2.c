@@ -1,20 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zoom.c                                             :+:      :+:    :+:   */
+/*   events2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/05 15:32:52 by amajer            #+#    #+#             */
-/*   Updated: 2022/04/07 16:16:05 by amajer           ###   ########.fr       */
+/*   Created: 2022/04/07 15:46:34 by amajer            #+#    #+#             */
+/*   Updated: 2022/04/07 16:07:00 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-int	zoom_in(t_data *d)
+void	free_d(t_data *d)
 {
-	d->zoom = d->zoom + 5;
+	int	j;
+
+	j = 0;
+	while (j < d->height)
+	{
+		free(d->depth[j]);
+		d->depth[j] = NULL;
+		j++;
+	}
+	free(d->depth);
+	d->depth = NULL;
+}
+
+int	change_angle_minnus(t_data *d)
+{
+	d->angle = d->angle - 5;
 	mlx_destroy_image(d->mlx_ptr, d->img);
 	d->img = mlx_new_image(d->mlx_ptr, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1);
 	d->addr = mlx_get_data_addr(d->img, &d->bits_per_pixel, &d->line_length, \
@@ -27,9 +42,9 @@ int	zoom_in(t_data *d)
 	return (0);
 }
 
-int	zoom_out(t_data *d)
+int	change_angle_plus(t_data *d)
 {
-	d->zoom = d->zoom - 5;
+	d->angle = d->angle + 5;
 	mlx_destroy_image(d->mlx_ptr, d->img);
 	d->img = mlx_new_image(d->mlx_ptr, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1);
 	d->addr = mlx_get_data_addr(d->img, &d->bits_per_pixel, &d->line_length, \
@@ -42,32 +57,23 @@ int	zoom_out(t_data *d)
 	return (0);
 }
 
-int	z_scale_plus(t_data *d)
+int	esc(t_data *d)
 {
-	d->z_scale = d->z_scale + 1;
 	mlx_destroy_image(d->mlx_ptr, d->img);
-	d->img = mlx_new_image(d->mlx_ptr, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1);
-	d->addr = mlx_get_data_addr(d->img, &d->bits_per_pixel, &d->line_length, \
-																	&d->endian);
-	if (d->height > 1)
-		draw_isometric(d);
-	else
-		draw_iso_single_line(d);
-	mlx_put_image_to_window(d->mlx_ptr, d->mlx_window, d->img, 0, 0);
+	mlx_destroy_window(d->mlx_ptr, d->mlx_window);
+	free_d(d);
+	system("leaks fdf");
+	exit(0);
 	return (0);
 }
 
-int	z_scale_minus(t_data *d)
+int	switch_to_parallel(t_data *d)
 {
-	d->z_scale = d->z_scale - 1;
 	mlx_destroy_image(d->mlx_ptr, d->img);
 	d->img = mlx_new_image(d->mlx_ptr, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1);
 	d->addr = mlx_get_data_addr(d->img, &d->bits_per_pixel, &d->line_length, \
 																	&d->endian);
-	if (d->height > 1)
-		draw_isometric(d);
-	else
-		draw_iso_single_line(d);
+	draw_parallel(d);
 	mlx_put_image_to_window(d->mlx_ptr, d->mlx_window, d->img, 0, 0);
 	return (0);
 }

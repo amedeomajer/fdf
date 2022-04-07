@@ -6,7 +6,7 @@
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 16:18:09 by amajer            #+#    #+#             */
-/*   Updated: 2022/04/06 21:51:03 by amajer           ###   ########.fr       */
+/*   Updated: 2022/04/07 16:14:07 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ void	initialize_struct(t_data *d)
 	d->zoom = 15;
 	d->start_x = 0;
 	d->start_y = 0;
+	d->z_scale = 1;
+	d->i = 0;
+	d->j = 0;
 }
 
 int	main(int argc, char **argv)
@@ -51,26 +54,10 @@ int	main(int argc, char **argv)
 		error("open failed!");
 	create_matrix(&d);
 	convert_map_to_int_array(fd, &d);
-	int i = 0;
-	int j = 0;
-
-	while (j < d.height)
-	{
-		i = 0;
-		while (i < d.width)
-		{
-			printf("%i	", d.depth[j][i]);
-			i++;
-		}
-		printf("\n");
-		j++;
-
-	}
-	printf("width = %i.\nheight = %i.\n", d.width, d.height);
 	if (d.height > 1)
 		draw_isometric(&d);
 	else
-	draw_iso_single_line(&d);
+		draw_iso_single_line(&d);
 	mlx_put_image_to_window(d.mlx_ptr, d.mlx_window, d.img, 0, 0);
 	mlx_hook(d.mlx_window, ON_DESTROY, 0, esc, &d);
 	mlx_hook(d.mlx_window, ON_KEYDOWN, (1L << 0), key_event, (void *)&d);

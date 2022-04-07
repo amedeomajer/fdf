@@ -6,7 +6,7 @@
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 16:23:28 by amajer            #+#    #+#             */
-/*   Updated: 2022/04/07 14:05:46 by amajer           ###   ########.fr       */
+/*   Updated: 2022/04/07 15:42:56 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,8 @@ void	draw_isometric(t_data *d)
 	}
 }
 
-void	parallel_helper(t_data *d, t_xy xy[4])
+void	draw_top_line(t_data *d, t_xy xy[4])
 {
-	d->k = 1;
-	if (d->j + d->k == d->height || d->i + d->k == d->width)
-		d->k = 0;
 	if (d->depth[d->j][d->i] > 0 || d->depth[d->j][d->i + d->k] > 0)
 	{
 		color_dda(xy[0], xy[1], d);
@@ -76,6 +73,14 @@ void	parallel_helper(t_data *d, t_xy xy[4])
 		if (d->i == d->width - 1)
 			dda(xy[1], xy[3], d);
 	}
+}
+
+void	parallel_helper(t_data *d, t_xy xy[4])
+{
+	d->k = 1;
+	if (d->j + d->k == d->height || d->i + d->k == d->width)
+		d->k = 0;
+	draw_top_line(d, xy);
 	if (d->depth[d->j][d->i] > 0 || d->depth[d->j + d->k][d->i] > 0)
 	{
 		color_dda(xy[0], xy[2], d);

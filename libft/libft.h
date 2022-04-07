@@ -6,7 +6,7 @@
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 17:24:24 by amajer            #+#    #+#             */
-/*   Updated: 2022/04/05 21:58:51 by amajer           ###   ########.fr       */
+/*   Updated: 2022/04/07 15:35:56 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # define FD_MAX 10240
 # define BUFF_SIZE 8
+# define FD_COUNT 12000
 
 int		get_next_line(const int fd, char **line);
 void	*ft_memset(void *b, int c, size_t len);

@@ -6,13 +6,13 @@
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 19:54:47 by amajer            #+#    #+#             */
-/*   Updated: 2022/04/07 14:38:13 by amajer           ###   ########.fr       */
+/*   Updated: 2022/04/07 16:15:18 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-static char	**ft_free(char **str, int a)
+char	**ft_free(char **str, int a)
 {
 	while (a >= 0)
 		free(str[a--]);
@@ -49,12 +49,10 @@ void	count_lines(int fd, t_data *d)
 	int		gnl_ret;
 
 	gnl_ret = get_next_line(fd, &line);
-	printf("\n\n\n%i\n\n\n", gnl_ret);
 	if (gnl_ret == 0)
 		error("file is empty!");
 	while (gnl_ret == 1)
 	{
-		d->i = 0;
 		values_array = ft_strsplit(line, ' ');
 		while (values_array[d->i] != 0)
 			d->i++;
@@ -68,12 +66,9 @@ void	count_lines(int fd, t_data *d)
 		values_array = NULL;
 		gnl_ret = get_next_line(fd, &line);
 	}
-	if (line)
-	{
-		ft_strdel(&line);
-	}
 	if (gnl_ret == -1)
 		error("read malfunction");
+	d->i = 0;
 }
 
 void	convert_map_to_int_array(int fd, t_data *d)
@@ -82,7 +77,6 @@ void	convert_map_to_int_array(int fd, t_data *d)
 	char	**values_array;
 	int		gnl_ret;
 
-	d->j = 0;
 	gnl_ret = get_next_line(fd, &line);
 	while (gnl_ret == 1)
 	{
@@ -95,7 +89,6 @@ void	convert_map_to_int_array(int fd, t_data *d)
 		}
 		ft_strdel(&line);
 		d->j++;
-		d->i = 0;
 		ft_free(values_array, d->width);
 		values_array = NULL;
 		gnl_ret = get_next_line(fd, &line);

@@ -6,7 +6,7 @@
 /*   By: amajer <amajer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 18:44:03 by amajer            #+#    #+#             */
-/*   Updated: 2022/04/05 21:42:16 by amajer           ###   ########.fr       */
+/*   Updated: 2022/04/07 16:07:44 by amajer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,5 @@
 void	error(char *str)
 {
 	ft_putendl(str);
-	system("leaks fdf");
 	exit(1);
 }
